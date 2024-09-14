@@ -89,7 +89,7 @@ heap_t *find_first_available(heap_t *root)
 void heapify_up(heap_t *node)
 {
 
-	while (node->parent != NULL && node->n > node->parent->n)
+	while (node->parent != NULL && node->n >= node->parent->n)
 	{
 		int temp = node->n;
 
