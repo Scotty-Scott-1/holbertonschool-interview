@@ -95,5 +95,7 @@ void heapify_up(heap_t *node)
 
 		node->n = node->parent->n;
 		node->parent->n = temp;
+
+		node = node->parent;
 	}
 }
