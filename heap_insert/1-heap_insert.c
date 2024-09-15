@@ -3,6 +3,8 @@
 #include "binary_trees.h"
 heap_t *find_first_available(heap_t *root);
 void heapify_up(heap_t *node);
+heap_t *dequeue(queue_node_t **queue);
+void enqueue(queue_node_t **queue, heap_t *tree_node);
 
 /**
  * heap_insert - insert a node to a binary tree
@@ -41,6 +43,9 @@ heap_t *heap_insert(heap_t **root, int value)
 		first_available->right = new;
 
 	heapify_up(new);
+
+
+
 	return (new);
 }
 
@@ -52,32 +57,35 @@ heap_t *heap_insert(heap_t **root, int value)
 
 heap_t *find_first_available(heap_t *root)
 {
-	if (root == NULL)
-	{
-		return (NULL);
-	}
 
-	if (root->left == NULL || root->right == NULL)
-	{
-		return (root);
-	}
+	queue_node_t *queue = NULL;
 
-	if (root->parent != NULL)
+	enqueue(&queue, root);
+
+	while (queue != NULL)
 	{
-		if (root->parent->right->left == NULL || root->parent->right->right == NULL)
+		heap_t *current = dequeue(&queue);
+
+		if (current->left == NULL || current->right == NULL)
 		{
-			return (root->parent->right);
+			return (current);
 		}
+
+		if (current->left != NULL)
+		{
+			enqueue(&queue, current->left);
+		}
+
+		if (current->right != NULL)
+		{
+			enqueue(&queue, current->right);
+		}
+
+
 	}
 
-	heap_t *left_slot = find_first_available(root->left);
+	return (NULL);
 
-	if (left_slot->left == NULL || left_slot->right == NULL)
-	{
-		return (left_slot);
-	}
-
-	return (find_first_available(root->right));
 }
 
 /**
@@ -98,4 +106,54 @@ void heapify_up(heap_t *node)
 
 		node = node->parent;
 	}
+}
+
+/**
+ * enqueue - add item to queue
+ * @queue: the queue
+ * @tree_node: tree_node
+ * Return: None
+ */
+void enqueue(queue_node_t **queue, heap_t *tree_node)
+{
+	queue_node_t *new_node = malloc(sizeof(queue_node_t));
+
+	new_node->tree_node = tree_node;
+	new_node->next = NULL;
+
+	if (*queue == NULL)
+	{
+		*queue = new_node;
+	} else
+	{
+		queue_node_t *temp = *queue;
+
+		while (temp->next != NULL)
+		{
+			temp = temp->next;
+		}
+		temp->next = new_node;
+
+	}
+}
+
+/**
+ * dequeue - remove first item from queue
+ * @queue: queue
+ * Return: heap_t
+ */
+heap_t *dequeue(queue_node_t **queue)
+{
+	if (*queue == NULL)
+	{
+		return (NULL);
+	}
+
+	queue_node_t *temp = *queue;
+	heap_t *node = temp->tree_node;
+	*queue = (*queue)->next;
+	free(temp);
+
+	return (node);
+
 }
