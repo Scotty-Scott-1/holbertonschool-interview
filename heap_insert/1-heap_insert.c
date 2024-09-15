@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "binary_trees.h"
 heap_t *find_first_available(heap_t *root);
-void heapify_up(heap_t *node);
+heap_t *heapify_up(heap_t *node);
 heap_t *dequeue(queue_node_t **queue);
 void enqueue(queue_node_t **queue, heap_t *tree_node);
 
@@ -18,14 +18,15 @@ heap_t *heap_insert(heap_t **root, int value)
 
 	heap_t *new = malloc(sizeof(heap_t));
 
-	new->n = value;
-	new->left = NULL;
-	new->right = NULL;
-
 	if (new == NULL)
 	{
 		return (NULL);
 	}
+
+	new->n = value;
+	new->left = NULL;
+	new->right = NULL;
+	new->parent = NULL;
 
 	if (*root == NULL)
 	{
@@ -36,17 +37,22 @@ heap_t *heap_insert(heap_t **root, int value)
 
 	heap_t *first_available = find_first_available(*root);
 
+	if (first_available == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
+
 	new->parent = first_available;
 	if (first_available->left == NULL)
 		first_available->left = new;
 	else
 		first_available->right = new;
 
-	heapify_up(new);
 
+	heap_t *og = heapify_up(new);
 
-
-	return (new);
+	return (og);
 }
 
 /**
@@ -94,20 +100,28 @@ heap_t *find_first_available(heap_t *root)
  * Return: None
  */
 
-void heapify_up(heap_t *node)
+heap_t *heapify_up(heap_t *node)
 {
+	heap_t *og = malloc(sizeof(heap_t));
 
-	while (node->parent != NULL && node->n >= node->parent->n)
+	og->n = node->n;
+	og->left = NULL;
+	og->right = NULL;
+	og->parent = NULL;
+
+	while (node->parent != NULL && node->n > node->parent->n)
 	{
+
+		heap_t *parent = node->parent;
 		int temp = node->n;
 
-		node->n = node->parent->n;
-		node->parent->n = temp;
-
-		node = node->parent;
+		node->n = parent->n;
+		parent->n = temp;
+		node = parent;
 	}
-}
 
+	return (og);
+}
 /**
  * enqueue - add item to queue
  * @queue: the queue
@@ -117,6 +131,9 @@ void heapify_up(heap_t *node)
 void enqueue(queue_node_t **queue, heap_t *tree_node)
 {
 	queue_node_t *new_node = malloc(sizeof(queue_node_t));
+
+	if (new_node == NULL)
+		return;
 
 	new_node->tree_node = tree_node;
 	new_node->next = NULL;
