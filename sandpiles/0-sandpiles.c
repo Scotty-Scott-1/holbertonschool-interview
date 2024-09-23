@@ -1,8 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #include "sandpiles.h"
 
+/**
+ * sandpiles_sum - add 2 sandpiles, sort and print
+ * @grid1: sandpile 1
+ * @grid2: sandpile 2
+ * Return: void
+ */
 
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
@@ -30,26 +35,31 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 }
 
 /**
- * print_grid - Print 3x3 grid
+ * print_grid2 - Print 3x3 grid
  * @grid: 3x3 grid
  *
  */
 void print_grid2(int grid[3][3])
 {
-    int i, j;
+	int i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (j)
-                printf(" ");
-            printf("%d", grid[i][j]);
-        }
-        printf("\n");
-    }
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (j)
+				printf(" ");
+			printf("%d", grid[i][j]);
+		}
+		printf("\n");
+	}
 }
 
+/**
+ * stable - add 2 sandpiles, sort and print
+ * @grid1: sandpile 1
+ * Return: void
+ */
 
 int stable(int grid1[3][3])
 {
@@ -58,7 +68,7 @@ int stable(int grid1[3][3])
 
 	for (int i = 0; i < 3; i++)
 	{
-		for(int j = 0; j<3; j++)
+		for (int j = 0; j < 3; j++)
 		{
 			if (grid1[i][j] >= 4)
 			{
@@ -66,32 +76,41 @@ int stable(int grid1[3][3])
 			}
 		}
 	}
-	return is_stable;
+	return (is_stable);
 }
 
+/**
+ * stablise - sort sanpile
+ * @grid1: sandpile 1
+ * Return: void
+ */
 void stablise(int grid1[3][3])
 {
 	int temp[3][3] = {0};
 
 	for (int i = 0; i < 3; i++)
 	{
-		for(int j = 0; j<3; j++)
+		for (int j = 0; j < 3; j++)
 		{
 			if (grid1[i][j] >= 4)
 			{
 				temp[i][j] -= 4;
 
-				if (i > 0) temp[i - 1][j]++;
-				if (i < 2) temp[i + 1][j]++;
-				if (j > 0) temp[i][j - 1]++;
-				if (j < 2) temp[i][j + 1]++;
+				if (i > 0)
+					temp[i - 1][j]++;
+				if (i < 2)
+					temp[i + 1][j]++;
+				if (j > 0)
+					temp[i][j - 1]++;
+				if (j < 2)
+					temp[i][j + 1]++;
 			}
 
 		}
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		for(int j = 0; j<3; j++)
+		for (int j = 0; j < 3; j++)
 		{
 			grid1[i][j] += temp[i][j];
 		}
