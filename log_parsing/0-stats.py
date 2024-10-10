@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-import sys
 """
 read and parse log data
 """
+
+import sys
 
 line_count = 0
 total_size = 0
