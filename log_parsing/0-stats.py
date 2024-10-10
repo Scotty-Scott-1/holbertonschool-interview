@@ -18,6 +18,7 @@ status_codes = {
 
 
 def print_logs():
+    """read and parse logs"""
 
     print("File size: {}".format(total_size))
     for code, count in status_codes.items():
