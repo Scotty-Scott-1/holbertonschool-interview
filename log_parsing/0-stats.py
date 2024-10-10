@@ -18,9 +18,9 @@ status_codes = {
 def print_logs():
     """a function"""
     print("File size: {}".format(total_size))
-    for code, count in status_codes.items():
-        if count != 0:
-            print("{}: {}".format(code, count))
+    for code in sorted(status_codes.keys()):
+        if status_codes[code] > 0:
+            print("{}: {}".format(code, status_codes[code]))
 
 
 try:
@@ -45,11 +45,9 @@ try:
             if line_count % 10 == 0:
                 print_logs()
 
-        except ValueError:
+        except (ValueError, IndexError):
             continue
-        except Exception:
-            continue
-
 
 except KeyboardInterrupt:
     print_logs()
+    sys.exit(0)
