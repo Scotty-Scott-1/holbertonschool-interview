@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-read and parse log data
-"""
+"""read and parse log data"""
+
 
 import sys
 
