@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-read and parse log data
-"""
+"""read and parse log data"""
 import sys
 
 line_count = 0
@@ -18,6 +16,7 @@ status_codes = {
 
 
 def print_logs():
+    """a function"""
     print("File size: {}".format(total_size))
     for code, count in status_codes.items():
         if count != 0:
