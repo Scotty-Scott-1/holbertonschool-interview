@@ -10,13 +10,14 @@
 
 int check_cycle(listint_t *list)
 {
-	listint_t *slow = list;
-	listint_t *fast = list->next;
-
-	if (list == NULL)
+	if (list == NULL || list->next == NULL)
 	{
 		return (0);
 	}
+
+	listint_t *slow = list;
+	listint_t *fast = list->next;
+
 	while (slow != NULL && fast != NULL && fast->next != NULL)
 	{
 		if (fast == slow)
