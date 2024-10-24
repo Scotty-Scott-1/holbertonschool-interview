@@ -23,10 +23,7 @@ int is_palindrome(unsigned long n)
 		reversed_n = reversed_n * 10 + last;
 		n /= 10;
 	}
-
-	printf("OG number = %d\n", OG);
-	printf("New number = %d\n\n", reversed_n);
-
+	
 	if (reversed_n == OG)
 		return (1);
 	else
