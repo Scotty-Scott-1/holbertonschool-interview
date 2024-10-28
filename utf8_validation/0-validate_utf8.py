@@ -10,9 +10,8 @@ def validUTF8(data):
         if int > 255:
             return False
 
-    byte_data = bytes(data)
-
     try:
+        byte_data = bytes(data)
         byte_data.decode("utf-8")
         return True
 
