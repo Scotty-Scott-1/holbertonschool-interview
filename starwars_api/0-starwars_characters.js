@@ -2,8 +2,6 @@ const request = require('request');
 const arg = process.argv[2];
 let array = [];
 
-console.log(arg);
-
 request("https://swapi-api.hbtn.io/api/films/" + arg , (error, response, body) => {
 
 	if(error) {
@@ -11,7 +9,6 @@ request("https://swapi-api.hbtn.io/api/films/" + arg , (error, response, body) =
 	} else {
 		const data = JSON.parse(body);
 		const film_characters = data.characters;
-		console.log(film_characters);
 
 		const charpromise = film_characters.map(url => {
 			return new Promise((resolve, reject) => {
