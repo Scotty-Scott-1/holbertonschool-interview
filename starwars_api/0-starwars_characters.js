@@ -4,10 +4,10 @@ const request = require('request');
 const arg = process.argv[2];
 let array = [];
 
-request("https://swapi-api.hbtn.io/api/films/" + arg , (error, response, body) => {
+request('https://swapi-api.hbtn.io/api/films/' + arg , (error, response, body) => {
 
 	if(error) {
-		console.log("error: ", error);
+		console.log('error: ', error);
 	} else {
 		const data = JSON.parse(body);
 		const film_characters = data.characters;
@@ -22,7 +22,9 @@ request("https://swapi-api.hbtn.io/api/films/" + arg , (error, response, body) =
 			});
 		});
 		Promise.all(charpromise).then(names => {array = names;
-			console.log(array);
+			array.forEach(name => {
+				console.log(name);
+			})
 		});
 	}
 
