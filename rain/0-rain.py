@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """rain function"""
 
+
 def rain(walls):
     """return total rain caught"""
     length = len(walls)
