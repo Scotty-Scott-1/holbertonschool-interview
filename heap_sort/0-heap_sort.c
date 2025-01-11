@@ -13,7 +13,7 @@ void swap(int *a, int *b)
 
 
 
-void shift_down(int *array, size_t size, size_t i)
+void shift_down(int *array, size_t size, size_t i, size_t og_size)
 {
 	size_t largest = i;
 	size_t left = (2 * i) + 1;
@@ -38,8 +38,8 @@ void shift_down(int *array, size_t size, size_t i)
 	if (largest != i)
 	{
 		swap(&array[i], &array[largest]);
-		print_array(array, 10);
-		shift_down(array, size, largest);
+		print_array(array, og_size);
+		shift_down(array, size, largest, og_size);
 	}
 }
 
@@ -57,14 +57,14 @@ void heap_sort(int *array, size_t size) {
 	while (i > 0)
 	{
 		i--;
-		shift_down(array, size, i);
+		shift_down(array, size, i, og_size);
 	}
 
 	for (i = size - 1; i > 0; i--)
 	{
 		swap(&array[0], &array[i]);
 		print_array(array, og_size);
-		shift_down(array, i, 0);
+		shift_down(array, i, 0, og_size);
 	}
 
 }
