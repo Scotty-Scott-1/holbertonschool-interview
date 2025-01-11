@@ -2,7 +2,12 @@
 #include <stdlib.h>
 #include "sort.h"
 
-
+/**
+ * swap - swaps two indexes
+ *
+ * @a: a
+ * @b: b
+ */
 void swap(int *a, int *b)
 {
 	int temp = *a;
@@ -12,7 +17,14 @@ void swap(int *a, int *b)
 }
 
 
-
+/**
+ * shift_down - shift to maintain max heap
+ *
+ * @array: The array
+ * @size: Number of elements
+ * @i: 0
+ * @og_size: og size of array
+ */
 void shift_down(int *array, size_t size, size_t i, size_t og_size)
 {
 	size_t largest = i;
@@ -44,13 +56,19 @@ void shift_down(int *array, size_t size, size_t i, size_t og_size)
 }
 
 
-
-void heap_sort(int *array, size_t size) {
-
+/**
+ * heap_sort - sorts array in max heap
+ *
+ * @array: The array
+ * @size: Number of elements in @array
+ */
+void heap_sort(int *array, size_t size)
+{
 	size_t i = size / 2;
 	size_t og_size = size;
 
-	if (array == NULL || size < 2) {
+	if (array == NULL || size < 2)
+	{
 		return;
 	}
 
