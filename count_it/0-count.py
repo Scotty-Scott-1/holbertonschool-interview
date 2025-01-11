@@ -4,8 +4,7 @@ import re
 
 
 def count_words(subreddit, word_list, after=None, word_count=None):
-    """a funcion"""
-
+    """a function"""
     url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
 
     if word_count is None:
@@ -13,16 +12,22 @@ def count_words(subreddit, word_list, after=None, word_count=None):
         for word in word_list:
             word_count[word.lower()] = 0
 
+    word_list = [word.lower() for word in word_list]
+    word_list = list(set(word_list))
+
     params = {'limit': 100}
     if after:
         params['after'] = after
 
+    headers = {'User-Agent': 'count_words'}
+
     try:
-        response = requests.get(url, params=params, allow_redirects=False)
+        response = requests.get(
+            url, params=params, headers=headers, allow_redirects=False)
 
         if response.status_code != 200:
-            print("error occurec: status code {}".format(response.status_code))
-            print(response.headers)
+            print("Failed to fetch data. Status code: {}".format(
+                response.status_code))
             return
 
         data = response.json()
@@ -47,7 +52,8 @@ def count_words(subreddit, word_list, after=None, word_count=None):
                 word_count.items(), key=lambda x: (-x[1], x[0]))
             for word, count in sorted_word_count:
                 if count > 0:
-                    print("{}: {}".format(word, count))
+                    print(f"{word}: {count}")
 
     except Exception as e:
+        print("An error occurred: {}".format(e))
         return
