@@ -34,7 +34,7 @@ int is_bst(const binary_tree_t *tree, int min, int max)
 		return (1);
 	if (tree->n <= min || tree->n >= max)
 		return (0);
-	return (is_bst(tree->left, min, tree->n) && s_bst(tree->right, tree->n, max));
+	return is_bst((tree->left, min, tree->n) && is_bst(tree->right, tree->n, max));
 }
 
 /**
@@ -54,7 +54,7 @@ int is_avl_helper(const binary_tree_t *tree)
 	if (abs(left_height - right_height) > 1)
 		return (0);
 
-	return (s_avl_helper(tree->left) && is_avl_helper(tree->right));
+	return is_avl_helper(tree->left) && is_avl_helper(tree->right);
 }
 
 /**
@@ -69,5 +69,5 @@ int binary_tree_is_avl(const binary_tree_t *tree)
 		return (0);
 
 	/* Check if it's a BST and also an AVL tree */
-	return (is_bst(tree, INT_MIN, INT_MAX) && is_avl_helper(tree));
+	return is_bst(tree, INT_MIN, INT_MAX) && is_avl_helper(tree);
 }
